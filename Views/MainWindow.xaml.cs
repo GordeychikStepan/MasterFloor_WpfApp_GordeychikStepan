@@ -1,6 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Input;
 using MasterFloor_WpfApp.Models;
+using MasterFloor_WpfApp.ViewModel;
 using MasterFloor_WpfApp.Views;
 using Microsoft.EntityFrameworkCore;
 
@@ -24,36 +25,48 @@ namespace MasterFloor_WpfApp
         {
             var partners = _context.Partners
                 .Include(p => p.PartnerType)
-                .Include(p => p.PartnerProducts)
-                    .ThenInclude(pp => pp.Product)
+                .Include(p => p.PartnerProducts).ThenInclude(pp => pp.Product)
                 .ToList();
 
-            var partnerViewModels = partners.Select(p => new
+            var viewModels = new List<PartnerViewModel>();
+
+            foreach (var p in partners)
             {
-                PartnerTypeAndName = $"{p.PartnerType?.TypeName} | {p.PartnerName}",
-                p.Ceo,
-                PartnerPhone = $"+7 {p.PartnerPhone}",
-                Rating = $"Рейтинг: {p.Rate}",
-                Discount = $"{CalculateDiscount(p)}%"
-            }).ToList();
+                string typeName = p.PartnerType?.TypeName ?? "(не указан)";
+                int totalSales = 0;
+                foreach (var pp in p.PartnerProducts)
+                {
+                    if (pp.Product != null && pp.ProductCount.HasValue)
+                    {
+                        totalSales += pp.ProductCount.Value;
+                    }
+                }
 
-            PartnersListView.ItemsSource = partnerViewModels;
+                int discount;
+
+                if (totalSales > 300000) 
+                    discount = 15;
+                else if (totalSales >= 50000) 
+                    discount = 10;
+                else if (totalSales >= 10000) 
+                    discount = 5;
+                else 
+                    discount = 0;
+
+                viewModels.Add(new PartnerViewModel
+                {
+                    PartnerId = p.PartnerId,
+                    PartnerTypeAndName = typeName + " | " + p.PartnerName,
+                    Ceo = p.Ceo,
+                    PartnerPhone = "+7 " + p.PartnerPhone,
+                    Rating = "Рейтинг: " + (p.Rate?.ToString() ?? "0"),
+                    Discount = discount + "%"
+                });
+            }
+
+            PartnersListView.ItemsSource = viewModels;
         }
 
-        // Рассчитывает индивидуальную скидку партнера на основании общей суммы продаж.
-        private int CalculateDiscount(Partner partner)
-        {
-            // Суммируем количество товаров
-            var totalSales = partner.PartnerProducts
-                .Where(pp => pp.Product != null)
-                .Sum(pp => pp.ProductCount ?? 0);
-
-            // Логика расчета скидки по порогам
-            if (totalSales > 300000) return 15;
-            if (totalSales >= 50000) return 10;
-            if (totalSales >= 10000) return 5;
-            return 0;
-        }
 
         private void Window_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
@@ -62,16 +75,20 @@ namespace MasterFloor_WpfApp
 
         private void PartnersListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            /*if (PartnersListView.SelectedItem is dynamic item)
+            if (PartnersListView.SelectedItem is PartnerViewModel item)
             {
-                int id = item.PartnerId;
-                var partner = _context.Partners.Find(id);
-                var wnd = new AddEditPartnerWindow(partner);
+                var partner = _context.Partners.Find(item.PartnerId);
+                var wnd = new AddEditPartnerWindow(_context, partner);
                 if (wnd.ShowDialog() == true)
-                {
                     LoadPartners();
-                }
-            }*/
+            }
+        }
+
+        private void AddPartner_Click(object sender, RoutedEventArgs e)
+        {
+            var wnd = new AddEditPartnerWindow(_context);
+            if (wnd.ShowDialog() == true)
+                LoadPartners();
         }
     }
 }
