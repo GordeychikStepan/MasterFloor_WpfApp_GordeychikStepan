@@ -1,0 +1,67 @@
+﻿<Window x:Class="MasterFloor_WpfApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MasterFloor_WpfApp"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
+        Title="Мастер пол - Список партнеров" 
+        FontFamily="Segoe UI"
+        MouseDown="Window_MouseDown"
+        Height="450" Width="800">
+    
+    <Grid Background="#FFFFFF">
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="50" />
+            <ColumnDefinition Width="5*" />
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50" />
+            <RowDefinition Height="5*" />
+        </Grid.RowDefinitions>
+
+        <Image Source="/Resources/Мастер пол.png"
+               Margin="10"/>
+
+        <TextBlock Grid.Column="1"
+                   Text="Список партнеров"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Center"
+                   FontSize="20"
+                   Margin="10"/>
+
+        <ListView Name="PartnersListView" Margin="10,0,10,10"
+                  HorizontalContentAlignment="Stretch"
+                  Grid.Row="1"
+                  MouseDoubleClick="PartnersListView_MouseDoubleClick"
+                  Grid.ColumnSpan="2">
+            
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Border BorderThickness="1" 
+                            BorderBrush="Gray" 
+                            Padding="10" 
+                            Margin="5"
+                            Background="#F4E8D3">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <StackPanel>
+                                <TextBlock Text="{Binding PartnerTypeAndName}" FontSize="16"/>
+                                <TextBlock Text="{Binding Ceo}"/>
+                                <TextBlock Text="{Binding PartnerPhone}"/>
+                                <TextBlock Text="{Binding Rating}"/>
+                            </StackPanel>
+                            <TextBlock Grid.Column="1" Margin="0,0,40,0" Text="{Binding Discount}" FontSize="16" />
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </Grid>
+</Window>
