@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.13.35931.197
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MasterFloor_TestProject", "MasterFloor_TestProject\MasterFloor_TestProject.csproj", "{E110820C-D01C-4255-829E-752E98582438}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MasterFloor_WpfApp", "MasterFloor_WpfApp\MasterFloor_WpfApp.csproj", "{3363CA37-CD16-21D8-8793-B1990A0273D3}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E110820C-D01C-4255-829E-752E98582438}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E110820C-D01C-4255-829E-752E98582438}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E110820C-D01C-4255-829E-752E98582438}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E110820C-D01C-4255-829E-752E98582438}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3363CA37-CD16-21D8-8793-B1990A0273D3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3363CA37-CD16-21D8-8793-B1990A0273D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3363CA37-CD16-21D8-8793-B1990A0273D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3363CA37-CD16-21D8-8793-B1990A0273D3}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {467BE624-972A-4695-BBF2-DA499D9E5A21}
+	EndGlobalSection
+EndGlobal

@@ -1,6 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Input;
 using MasterFloor_WpfApp.Models;
+using MasterFloor_WpfApp.Services;
 using MasterFloor_WpfApp.ViewModel;
 using MasterFloor_WpfApp.Views;
 using Microsoft.EntityFrameworkCore;
@@ -42,16 +43,7 @@ namespace MasterFloor_WpfApp
                     }
                 }
 
-                int discount;
-
-                if (totalSales > 300000) 
-                    discount = 15;
-                else if (totalSales >= 50000) 
-                    discount = 10;
-                else if (totalSales >= 10000) 
-                    discount = 5;
-                else 
-                    discount = 0;
+                int discount = Service.GetPercent(totalSales);
 
                 viewModels.Add(new PartnerViewModel
                 {
