@@ -10,7 +10,28 @@
         Title="AddEditPartnerWindow"
         Height="500" MinHeight="500"
         Width="550" MinWidth="500">
-    
+
+    <Window.Resources>
+        <ControlTemplate x:Key="NoMouseOverButtonTemplate" TargetType="Button">
+            <Border Background="{TemplateBinding Background}"  
+        BorderBrush="{TemplateBinding BorderBrush}"  
+        BorderThickness="{TemplateBinding BorderThickness}"
+        Padding="{TemplateBinding Padding}">
+                <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"  
+                      VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+            </Border>
+
+            <ControlTemplate.Triggers>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Background" Value="{x:Static SystemColors.ControlLightBrush}" />
+                    <Setter Property="Foreground" Value="{x:Static SystemColors.GrayTextBrush}" />
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+
+        
+    </Window.Resources>
+
     <Grid Margin="0" Background="#FFFFFF">
 
         <Grid.ColumnDefinitions>
@@ -38,25 +59,33 @@
 
         <StackPanel Grid.Row="1" Grid.ColumnSpan="2" Orientation="Vertical" Margin="10">
             <TextBlock Text="Наименование"/>
-            <TextBox x:Name="NameText" Margin="0,5"/>
+            <TextBox x:Name="NameText" MaxLength="50" Margin="0,5"/>
 
             <TextBlock Text="Тип партнера"/>
-            <ComboBox x:Name="TypeCombo" Margin="0,5"/>
+            <ComboBox x:Name="TypeCombo" Background="White" Margin="0,5"/>
 
             <TextBlock Text="Рейтинг"/>
-            <TextBox x:Name="RatingText" Margin="0,5"/>
+            <TextBox x:Name="RatingText" MaxLength="2" Margin="0,5"/>
 
             <TextBlock Text="Адрес"/>
-            <TextBox x:Name="AddressText" Margin="0,5"/>
+            <TextBox x:Name="AddressText" MaxLength="100" Margin="0,5"/>
 
             <TextBlock Text="ФИО директора"/>
-            <TextBox x:Name="CeoText" Margin="0,5"/>
+            <TextBox x:Name="CeoText" MaxLength="100" Margin="0,5"/>
 
             <TextBlock Text="Телефон"/>
-            <TextBox x:Name="PhoneText" Margin="0,5"/>
+            <Grid Margin="0,5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="+7" Margin="0,0,4,0"/>
+                <TextBox x:Name="PhoneText" Grid.Column="1" MaxLength="13" />
+            </Grid>
+           
 
             <TextBlock Text="Email"/>
-            <TextBox x:Name="EmailText" Margin="0,5"/>
+            <TextBox x:Name="EmailText" MaxLength="50" Margin="0,5"/>
         </StackPanel>
 
 
@@ -64,10 +93,16 @@
 
 
         <StackPanel Margin="10" Grid.Row="3" Grid.ColumnSpan="2" Orientation="Horizontal">
-            <Button Content="Назад" Width="80" Height="30" Margin="5" Click="Cancel_Click"/>
+            <Button Content="Назад" 
+                    Width="80" Height="30" 
+                    Margin="5" 
+                    Template="{StaticResource NoMouseOverButtonTemplate}"
+                    Background="White"
+                    Click="Cancel_Click"/>
             <Button Content="Сохранить" 
                     Height="30"
                     Background="#67BA80" 
+                    Template="{StaticResource NoMouseOverButtonTemplate}"
                     Width="80" 
                     Margin="5" 
                     Click="Save_Click" />
